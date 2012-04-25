@@ -1,0 +1,18 @@
+{
+	"author"		: "Alex Ghiu <alex@deefuse.com>",
+	"name"			: "mongoose-searchable",
+	"description"	: "add full text capabilities to mongoose documents",
+	"version"		: "0.0.1",
+	"repository"	: {
+		"type"		: "git",
+		"url"		: "git://github.com/alexdeefuse/mongoose-searchable.git"
+	},
+	"dependencies"	: {
+		"natural"	: "*"
+	},
+	"devDependencies": {
+		"mongoose"	: "2.5.x",
+		"mocha"		: "*",
+		"should"	: "*"
+	}
+}

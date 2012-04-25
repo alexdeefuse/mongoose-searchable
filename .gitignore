@@ -1,15 +1,15 @@
-lib-cov
-*.seed
-*.log
-*.csv
-*.dat
-*.out
-*.pid
-*.gz
+#	monitor file... fuck if i know?!
+.monitor
 
-pids
-logs
-results
-
+#	app database
+data
 node_modules
-npm-debug.log
+
+#	os generated files
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+
+#	textmate project
+*.tmproj
