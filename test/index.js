@@ -17,6 +17,22 @@ mongoose.connect('localhost', 'mongoose_searchable');
  *	schemas
  */
 
+var BookSchema = new Schema({
+	title: String,
+	author: String,
+	price: Number
+});
+BookSchema.plugin(Searchable.hook, { fields: 'title author'.split(' ') });
+
+var PageSchema = new Schema({
+	number: Number,
+	content: String
+});
+PageSchema.plugin(Searchable.hook, {fields: 'content'});
+
+var Book = mongoose.model('Book', BookSchema);
+var Page = mongoose.model('Page', PageSchema);
+
 /**
  *	testing
  */
