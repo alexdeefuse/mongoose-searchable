@@ -57,15 +57,10 @@ describe('searchable', function(){
 		done();
 	});
 	
-	it('should have a collection name property', function(done){
-		Searchable.should.have.property('collection_name');
-		done();
-	});
-	
 	it('should create its own collection', function(done){
 		var c = 0;
 		try{
-			mongoose.model(Searchable.collection_name);
+			mongoose.model(Searchable._collection_name);
 		}catch(e){
 			c++;
 		}
@@ -176,6 +171,8 @@ describe('searchable', function(){
 					should.not.exist(err);
 					
 					list.should.have.length( 6 );
+					
+					console.log(list);
 					
 					done();
 				});
