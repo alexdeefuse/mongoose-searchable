@@ -44,6 +44,14 @@ describe('searchable', function(){
 		mongoose.connection.on('open', done);
 	});
 	
+	beforeEach(function(done){
+		Searchable.IndexModel.remove({}, function(){
+			Page.remove({}, function(){
+				Book.remove({}, done);
+			});
+		});
+	});
+	
 	it('should have a setup to link to mongoose', function(done){
 		Searchable.should.have.property('setup');
 		done();
@@ -108,7 +116,26 @@ describe('searchable', function(){
 		})
 	});
 	
-	it('should allow each linked collection to be searched independently');
+	it('should allow each linked collection to be searched independently', function(done){
+		
+		Book.create( [
+			{ title: 'Book 1', author: 'alex ghiu' },
+			{ title: 'My Second Book ', author: 'alex ghiu' },
+			{ title: 'Third ', author: 'alex ghiu' },
+			{ title: 'His ', author: 'cristi ghiu' },
+		], function(err){
+			should.not.exist( err );
+			
+			Book.search( 'alex', function(err, list){
+				should.not.exist(err);
+				
+				list.should.have.length( 3 );
+				
+				done();
+			} );
+		} );
+		
+	});
 	
 	it('should allow global searching on all linked collections');
 	
