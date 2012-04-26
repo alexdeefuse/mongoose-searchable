@@ -126,10 +126,10 @@ describe('searchable', function(){
 		], function(err){
 			should.not.exist( err );
 			
-			Book.search( 'alex', function(err, list){
+			Book.search( 'book', function(err, list){
 				should.not.exist(err);
 				
-				list.should.have.length( 3 );
+				list.should.have.length( 2 );
 				
 				done();
 			} );
