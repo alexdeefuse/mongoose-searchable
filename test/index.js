@@ -137,6 +137,27 @@ describe('searchable', function(){
 		
 	});
 	
+	it('should return results for queries bigger than one word', function(done){
+		
+		Book.create( [
+			{ title: 'Book 1', author: 'alex ghiu' },
+			{ title: 'My Second Book ', author: 'alex ghiu' },
+			{ title: 'Third ', author: 'alex ghiu' },
+			{ title: 'His ', author: 'cristi ghiu' },
+		], function(err){
+			should.not.exist( err );
+			
+			Book.search( 'book alex', function(err, list){
+				should.not.exist(err);
+				
+				list.should.have.length( 3 );
+				
+				done();
+			} );
+		} );
+		
+	});
+	
 	it('should allow global searching on all linked collections');
 	
 	it('should allow to restrict the number of collections to be searched');
