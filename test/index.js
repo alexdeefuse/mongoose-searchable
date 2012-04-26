@@ -115,7 +115,7 @@ describe('searchable', function(){
 			done();
 		})
 	});
-	
+/*	
 	it('should allow each linked collection to be searched independently', function(done){
 		
 		Book.create( [
@@ -157,8 +157,33 @@ describe('searchable', function(){
 		} );
 		
 	});
-	
-	it('should allow global searching on all linked collections');
+*/	
+	it('should allow global searching on all linked collections', function(done){
+		
+		Book.create( [
+			{ title: 'Book 1', author: 'alex ghiu' },
+			{ title: 'My Second Book ', author: 'alex ghiu' },
+			{ title: 'Third ', author: 'alex ghiu' },
+			{ title: 'His ', author: 'cristi ghiu' },
+		], function(err){
+			Page.create([
+				{ content: 'As he went to read his book, he snaped his finger on the switch' },
+				{ content: 'Booking stuff on the web is hard' },
+				{ content: 'I hear you shouting: Alex, Alex!' },
+			], function(){
+				
+				Searchable.search( 'book alex', function(err, list){
+					should.not.exist(err);
+					
+					list.should.have.length( 6 );
+					
+					done();
+				});
+				
+			});
+		});
+		
+	});
 	
 	it('should allow to restrict the number of collections to be searched');
 	
