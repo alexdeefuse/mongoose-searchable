@@ -1,4 +1,5 @@
-var should		= require('should');
+var should		= require('should'),
+	_			= require('underscore');
 
 var mongoose	= require('mongoose'),
 	Schema		= mongoose.Schema;
@@ -22,13 +23,13 @@ var BookSchema = new Schema({
 	author: String,
 	price: Number
 });
-BookSchema.plugin(Searchable.hook, { fields: 'title author'.split(' ') });
+BookSchema.plugin(Searchable.hook, { name: 'Book', fields: 'title author'.split(' ') });
 
 var PageSchema = new Schema({
 	number: Number,
 	content: String
 });
-PageSchema.plugin(Searchable.hook, {fields: 'content'});
+PageSchema.plugin(Searchable.hook, { name: 'Page', fields: 'content' });
 
 var Book = mongoose.model('Book', BookSchema);
 var Page = mongoose.model('Page', PageSchema);
@@ -69,8 +70,42 @@ describe('searchable', function(){
 		done();
 	});
 	
-	it('should copy keywords from linked collections', function(done){
+	it('should define a "getKeywords" method on model', function(done){
+		Book.prototype.getKeywords.should.be.a('function');
+		done();
+	});
+	
+	it('should return processed keywords by "getKeywords"', function(done){
+		var b = new Book({
+			title	: 'Lord of the rings',
+			author	: 'John Ronald Reuel Tolkien'
+		});
+		var keywords = b.getKeywords();
+		_.isObject( keywords ).should.be.true;
+		_.keys( keywords ).length.should.be.above(0);
+		done();
+	});
+	
+	it('should count occurences of keywords', function(done){
+		var b = new Book({
+			title	: 'Lord of the rings Lord',
+			author	: 'John Ronald Reuel Tolkien'
+		});
 		
+		var keywords = b.getKeywords();
+		
+		done();
+	});
+	
+	it('should copy keywords from linked collections', function(done){
+		var b = new Book({
+			title	: 'Lord of the rings',
+			author	: 'Lord John Lord Ronald Reuel Tolkien'
+		});
+		b.save(function(err){
+			should.not.exist(err);
+			done();
+		})
 	});
 	
 	it('should allow each linked collection to be searched independently');
