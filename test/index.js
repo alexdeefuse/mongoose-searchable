@@ -118,4 +118,6 @@ describe('searchable', function(){
 	
 	it('should allow the returning of diffrent types of documents');
 	
+	it('should delete index along with document');
+	
 });
